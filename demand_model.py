@@ -12,12 +12,20 @@ from pylab import *
 
 
 class DemandFile:
-    def __init__(self,filename, parsesheet):
-        self.dataframe = importExcelData(filename, parsesheet)
+    def __init__(self, *args):
+        for count, thing in enumerate(args):
+            if count == 0:
+                arg1 = thing
+            elif count == 1:
+                arg2 = thing
+        if count == 1:
+            self.dataframe = importExcelData(arg1, arg2)
+        elif count == 0:
+            self.dataframe = arg1        
         self.date = self.dataframe['Date']
         self.date_ud = unduplicate(self.date)
         self.CusID = self.dataframe['CustomerID']
-        self.CusID_ud = unduplicate(self.CusID) #unduplicated customer ID list for search
+        self.CusID_ud = unduplicate(self.CusID)
     def getDataframeAll(self):
         return self.dataframe
     def getDate(self):
